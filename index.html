@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>8 Mart Təbriki</title>
+    <style>
+        /* Ümumi tənzimləmələr və Mobil Uyğunluq */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fce4ec; /* Yumşaq çəhrayı fon */
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow: hidden; /* Animasiya vaxtı ekran sürüşməsin */
+            color: #d81b60;
+        }
+
+        /* Şəkil konteyneri (Ekranı tam tutur) */
+        .photo-sequence {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            background-color: #fce4ec;
+        }
+
+        /* Şəkillərin stili */
+        .slide-photo {
+            position: absolute;
+            max-width: 90%; /* Mobildə kənarlardan məsafə */
+            max-height: 80vh;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0; /* Başlanğıcda görünməz */
+            object-fit: cover; /* Şəkil dartılmasın */
+        }
+
+        /* Sürətli keçid animasiyası (Söz verdiyim kimi "tez-tez") */
+        @keyframes flashInfo {
+            0% { opacity: 0; transform: scale(0.8); }
+            10% { opacity: 1; transform: scale(1); }
+            30% { opacity: 1; transform: scale(1); }
+            40% { opacity: 0; transform: scale(1.1); }
+            100% { opacity: 0; }
+        }
+
+        /* Hər şəkil üçün fərqli gecikmə (delay) */
+        .photo-sequence img:nth-child(1) {
+            animation: flashInfo 1s ease-in-out 0s 1 normal forwards;
+        }
+        .photo-sequence img:nth-child(2) {
+            animation: flashInfo 1s ease-in-out 0.8s 1 normal forwards; /* Bir az üst-üstə düşürlər */
+        }
+        .photo-sequence img:nth-child(3) {
+            animation: flashInfo 1s ease-in-out 1.6s 1 normal forwards;
+        }
+
+        /* Sonuncu mətn konteyneri */
+        .final-message {
+            text-align: center;
+            padding: 20px;
+            opacity: 0; /* Başlanğıcda gizli */
+            transform: translateY(20px);
+            z-index: 10;
+        }
+
+        /* Mətnin animasiyası (Şəkillərdən sonra çıxır) */
+        @keyframes fadeInText {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .final-text {
+            font-size: 1.8rem; /* Mobil üçün uyğun ölçü */
+            line-height: 1.4;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .heart-icon {
+            font-size: 3rem;
+            margin-top: 20px;
+            display: block;
+            animation: heartBeat 1.5s infinite;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Planşet və Kompüter üçün mətn ölçüsünü böyütmək */
+        @media (min-width: 768px) {
+            .final-text {
+                font-size: 2.8rem;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="photo-sequence" id="photoArea">
+        <img src="foto1.jpg" alt="Foto 1" class="slide-photo">
+        <img src="foto2.jpg" alt="Foto 2" class="slide-photo">
+        <img src="foto3.jpg" alt="Foto 3" class="slide-photo">
+    </div>
+
+    <div class="final-message" id="messageArea">
+        <p class="final-text">səni hərşeydən çox sevirəm ömrüm 8 martın mübarək</p>
+        <span class="heart-icon">❤️</span>
+    </div>
+
+    <script>
+        // Şəkillər bitdikdən sonra mətni göstərmək üçün script
+        window.addEventListener('load', function() {
+            const photoArea = document.getElementById('photoArea');
+            const messageArea = document.getElementById('messageArea');
+
+            // Animasiyaların ümumi müddəti təxminən 2.6 saniyə çəkir.
+            // Biz 3 saniyə (3000ms) sonra mətni gətiririk.
+            setTimeout(function() {
+                // Şəkil sahəsini yox et
+                photoArea.style.display = 'none';
+                
+                // Mətn sahəsinə animasiya əlavə et və göstər
+                messageArea.style.animation = 'fadeInText 1s ease-out forwards';
+            }, 3000); 
+        });
+    </script>
+</body>
+</html>
